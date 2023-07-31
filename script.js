@@ -5,12 +5,6 @@ let selectedColor = "white";
 
 const grid = document.querySelector(".grid");
 
-function resetMouse() {
-    // To prevent colouring by hovering
-    mouseDown = false;
-    mouseEnter = false;
-}
-
 function allowColorChange(square) {
     // Multiple events to allow user to color while dragging their clicked mouse
     square.addEventListener("mousedown", (event) => {
@@ -26,11 +20,6 @@ function allowColorChange(square) {
             event.target.style.backgroundColor = selectedColor;
         }
     });
-
-    square.addEventListener("mouseup", () => {
-        resetMouse();
-    });
-
 }
 
 function populateGrid(squaresPerRow=16) {
@@ -55,7 +44,6 @@ function populateGrid(squaresPerRow=16) {
     }
 
     for (square of grid.children) allowColorChange(square);
-    resetMouse();
 
     const gridSizeHeading = document.querySelector(".grid-size-heading");
     gridSizeHeading.innerText = `Grid Size: ${squaresPerRow} × ${squaresPerRow}`;
@@ -72,10 +60,8 @@ for (colorBox of colorBoxes) {
 
         event.target.classList.add("selected");
         selectedColor = event.target.getAttribute("id");
-        resetMouse;
     });
 }
-
 
 const resetButton = document.querySelector(".reset-button");
 
@@ -97,6 +83,12 @@ changeGridSizeButton.addEventListener("click", () => {
 
     populateGrid(newGridLength);
 })
+
+// Prevents coloring by hovering mouse
+document.body.addEventListener("mouseup", () => {
+    mouseDown = false;
+    mouseEnter = false;
+});
 
 // Make initial grid
 populateGrid();
