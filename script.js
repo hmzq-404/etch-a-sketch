@@ -1,11 +1,30 @@
 const GRID_LENGTH = 500;
+let mouseDown = false;
+let mouseEnter = false;
 
 const grid = document.querySelector(".grid");
 
-function setHoverEffect(square) {
-    square.addEventListener("mouseover", () => {
-        square.style.backgroundColor = "lightgreen";
+function addColoringEvents(square) {
+    // Multiple events to allow user to color while dragging their clicked mouse
+    square.addEventListener("mousedown", () => {
+        mouseDown = true;
+        if (mouseEnter && mouseDown) {
+            square.style.backgroundColor = "lightgreen";
+        }
     });
+
+    square.addEventListener("mouseenter", () => {
+        mouseEnter = true;
+        if (mouseEnter && mouseDown) {
+            square.style.backgroundColor = "lightgreen";
+        }
+    });
+
+    square.addEventListener("mouseup", () => {
+        mouseDown = false;
+        mouseEnter = false;
+    });
+
 }
 
 function populateGrid(squaresPerRow=16) {
@@ -30,7 +49,7 @@ function populateGrid(squaresPerRow=16) {
         grid.appendChild(newSquare);
     }
 
-    for (square of grid.children) setHoverEffect(square);
+    for (square of grid.children) addColoringEvents(square);
 
     const gridSizeHeading = document.querySelector(".grid-size-heading");
     gridSizeHeading.innerText = `${squaresPerRow} × ${squaresPerRow}`;
@@ -40,7 +59,7 @@ function populateGrid(squaresPerRow=16) {
 const resetButton = document.querySelector(".reset-button");
 
 resetButton.addEventListener("click", () => {
-    // Keeps the same size but removes colour
+    // Keeps the same size but removes color
     populateGrid(Math.sqrt(grid.children.length));
 });
 
