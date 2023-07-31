@@ -1,22 +1,23 @@
 const GRID_LENGTH = 500;
 let mouseDown = false;
 let mouseEnter = false;
+let selectedColor = "white";
 
 const grid = document.querySelector(".grid");
 
-function addColoringEvents(square) {
+function allowColorChange(square) {
     // Multiple events to allow user to color while dragging their clicked mouse
-    square.addEventListener("mousedown", () => {
+    square.addEventListener("mousedown", (event) => {
         mouseDown = true;
         if (mouseEnter && mouseDown) {
-            square.style.backgroundColor = "lightgreen";
+            event.target.style.backgroundColor = selectedColor;
         }
     });
 
-    square.addEventListener("mouseenter", () => {
+    square.addEventListener("mouseenter", (event) => {
         mouseEnter = true;
         if (mouseEnter && mouseDown) {
-            square.style.backgroundColor = "lightgreen";
+            event.target.style.backgroundColor = selectedColor;
         }
     });
 
@@ -49,13 +50,27 @@ function populateGrid(squaresPerRow=16) {
         grid.appendChild(newSquare);
     }
 
-    for (square of grid.children) addColoringEvents(square);
+    for (square of grid.children) allowColorChange(square);
 
     const gridSizeHeading = document.querySelector(".grid-size-heading");
-    gridSizeHeading.innerText = `${squaresPerRow} × ${squaresPerRow}`;
+    gridSizeHeading.innerText = `Grid Size: ${squaresPerRow} × ${squaresPerRow}`;
 }
 
+
 // Add event listeners to buttons
+const colorBoxes = document.querySelectorAll(".color-box");
+
+for (colorBox of colorBoxes) {
+    colorBox.addEventListener("click", (event) => {
+        const previouslySelected = document.querySelector(".selected");
+        previouslySelected.classList.remove("selected");
+
+        event.target.classList.add("selected");
+        selectedColor = event.target.getAttribute("id");
+    });
+}
+
+
 const resetButton = document.querySelector(".reset-button");
 
 resetButton.addEventListener("click", () => {

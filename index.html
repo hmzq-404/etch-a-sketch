@@ -10,12 +10,26 @@
 
     <body>
         <h1>Etch a Sketch</h1>
-        <p>Hover over a square to color it</p>
         <h3 class="grid-size-heading"></h3>
-        <div class="grid"></div>
-        <div class="button-container">
-            <button class="change-grid-size-button">Change Grid Size</button>
-            <button class="reset-button">Clear</button>
+
+        <div class="main-container">
+            <div class="colors-container">
+                <div class="color-box" id="black"></div>
+                <div class="color-box selected" id="white"></div>
+                <div class="color-box" id="red"></div>
+                <div class="color-box" id="green"></div>
+                <div class="color-box" id="blue"></div>
+                <div class="color-box" id="yellow"></div>
+                <div class="color-box" id="brown"></div>
+            </div>
+
+            <div class="grid-container">
+                <div class="grid"></div>
+                <div class="button-container">
+                    <button class="change-grid-size-button">Change Grid Size</button>
+                    <button class="reset-button">Clear</button>
+                </div>
+            </div>
         </div>
     </body>
 </html>
