@@ -1,5 +1,7 @@
 const GRID_LENGTH = 500;
 
+const grid = document.querySelector(".grid");
+
 function setHoverEffect(square) {
     square.addEventListener("mouseover", () => {
         square.style.backgroundColor = "lightgreen";
@@ -7,7 +9,6 @@ function setHoverEffect(square) {
 }
 
 function populateGrid(squaresPerRow=16) {
-    const grid = document.querySelector(".grid");
     const gridSquares = grid.childNodes;
 
     // Remove previous squares
@@ -35,13 +36,13 @@ function populateGrid(squaresPerRow=16) {
     gridSizeHeading.innerText = `${squaresPerRow} × ${squaresPerRow}`;
 }
 
-// Make initial grid
-populateGrid();
-
 // Add event listeners to buttons
 const resetButton = document.querySelector(".reset-button");
 
-resetButton.addEventListener("click", () => populateGrid());
+resetButton.addEventListener("click", () => {
+    // Keeps the same size but removes colour
+    populateGrid(Math.sqrt(grid.children.length));
+});
 
 const changeGridSizeButton = document.querySelector(".change-grid-size-button");
 
@@ -56,3 +57,6 @@ changeGridSizeButton.addEventListener("click", () => {
 
     populateGrid(newGridLength);
 })
+
+// Make initial grid
+populateGrid();
