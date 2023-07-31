@@ -5,6 +5,12 @@ let selectedColor = "white";
 
 const grid = document.querySelector(".grid");
 
+function resetMouse() {
+    // To prevent colouring by hovering
+    mouseDown = false;
+    mouseEnter = false;
+}
+
 function allowColorChange(square) {
     // Multiple events to allow user to color while dragging their clicked mouse
     square.addEventListener("mousedown", (event) => {
@@ -22,8 +28,7 @@ function allowColorChange(square) {
     });
 
     square.addEventListener("mouseup", () => {
-        mouseDown = false;
-        mouseEnter = false;
+        resetMouse();
     });
 
 }
@@ -40,7 +45,6 @@ function populateGrid(squaresPerRow=16) {
 
     const squareLength = GRID_LENGTH / squaresPerRow;
     const totalSquares = squaresPerRow ** 2
-
     // Add new squares
     for (let i = 1; i <= totalSquares; i++) {
         const newSquare = document.createElement("div");
@@ -51,6 +55,7 @@ function populateGrid(squaresPerRow=16) {
     }
 
     for (square of grid.children) allowColorChange(square);
+    resetMouse();
 
     const gridSizeHeading = document.querySelector(".grid-size-heading");
     gridSizeHeading.innerText = `Grid Size: ${squaresPerRow} × ${squaresPerRow}`;
@@ -67,6 +72,7 @@ for (colorBox of colorBoxes) {
 
         event.target.classList.add("selected");
         selectedColor = event.target.getAttribute("id");
+        resetMouse;
     });
 }
 
