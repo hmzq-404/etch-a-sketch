@@ -8,12 +8,12 @@ function setHoverEffect(square) {
 
 function populateGrid(squaresPerRow=16) {
     const grid = document.querySelector(".grid");
-    const gridSquares = document.querySelectorAll(".grid > .square");
+    const gridSquares = grid.childNodes;
 
     // Remove previous squares
     if (gridSquares.length > 0) {
-        for (square of grid.children) {
-            grid.removeChild(square);
+        while (grid.firstChild) {
+            grid.removeChild(grid.firstChild);
         }
     }
 
@@ -34,3 +34,7 @@ function populateGrid(squaresPerRow=16) {
 
 // Make initial grid
 populateGrid();
+
+// Add event listeners to buttons
+resetButton = document.querySelector(".reset-button");
+resetButton.addEventListener("click", () => populateGrid());
